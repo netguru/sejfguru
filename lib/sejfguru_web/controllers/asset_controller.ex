@@ -1,4 +1,4 @@
-defmodule SejfguruWeb.PageController do
+defmodule SejfguruWeb.AssetController do
   use SejfguruWeb, :controller
 
   def index(conn, _params) do
