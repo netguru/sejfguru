@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :sejfguru, Sejfguru.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "sejfguru",
+  password: System.get_env("DATABASE_PASSWORD"),
   database: "sejfguru_dev",
   hostname: "localhost",
   pool_size: 10
