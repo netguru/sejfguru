@@ -3,6 +3,9 @@ deps/*
 doc/*
 tmp/*
 assets/node_modules/*
+priv/static/css/
+priv/static/js/
+priv/static/fonts/
 
 installer/_build/*
 installer/tmp/*
