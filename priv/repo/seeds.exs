@@ -9,3 +9,8 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Sejfguru.{Repo, Asset}
+
+Repo.insert!(%Asset{ name: "iPhone 5s" })
+Repo.insert!(%Asset{ name: "Google Pixel" })
