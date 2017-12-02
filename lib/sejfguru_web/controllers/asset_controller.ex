@@ -1,7 +1,9 @@
 defmodule SejfguruWeb.AssetController do
   use SejfguruWeb, :controller
+  alias Sejfguru.{Repo, Asset}
 
   def index(conn, _params) do
-    render conn, "index.html"
+    assets = Repo.all(Asset)
+    render conn, "index.html", assets: assets
   end
 end

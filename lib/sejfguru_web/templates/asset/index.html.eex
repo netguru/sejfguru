@@ -1,0 +1,24 @@
+<div class="container">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Asset ID</th>
+        <th scope="col">Asset Name</th>
+        <th scope="col">Last User</th>
+        <th scope="col">Last Borrowed</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for asset <- @assets do %>
+        <tr>
+          <th scope="row"><%= asset.id %></th>
+          <td><%= asset.name %></td>
+          <td>N/A</td>
+          <td>N/A</td>
+          <td><a href="#">Show history</a></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
