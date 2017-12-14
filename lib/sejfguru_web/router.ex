@@ -17,6 +17,8 @@ defmodule SejfguruWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/auth", AuthController, :request
+    get "/auth-callback", AuthController, :callback
   end
 
   # Other scopes may use custom stacks.
