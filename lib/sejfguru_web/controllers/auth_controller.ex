@@ -11,7 +11,7 @@ defmodule SejfguruWeb.AuthController do
     user_attrs =
       info
       |> Map.take([:first_name, :last_name, :email, :image])
-      |> Map.merge(%{google_uid: uid})
+      |> Map.put(:google_uid, uid)
 
     case Accounts.upsert_user(user_attrs) do
       {:ok, user} ->
