@@ -1,4 +1,4 @@
-defmodule Sejfguru.Guardian do
+defmodule SejfguruWeb.Guardian do
   use Guardian, otp_app: :sejfguru
 
   alias Sejfguru.Accounts

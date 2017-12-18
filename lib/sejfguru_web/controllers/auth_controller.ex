@@ -5,7 +5,7 @@ defmodule SejfguruWeb.AuthController do
   plug :ensure_proper_domain when action in [:callback]
 
   alias Sejfguru.Accounts
-  alias Sejfguru.Guardian
+  alias SejfguruWeb.Guardian
 
   def callback(%{assigns: %{ueberauth_auth: %{info: info, uid: uid}}} = conn, _params) do
     user_attrs =

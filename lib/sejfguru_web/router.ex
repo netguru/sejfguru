@@ -9,6 +9,10 @@ defmodule SejfguruWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :browser_auth do
+    plug SejfguruWeb.AuthAccessPipeline
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -21,8 +25,9 @@ defmodule SejfguruWeb.Router do
     get "/auth-callback", AuthController, :callback
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SejfguruWeb do
-  #   pipe_through :api
-  # end
+  scope "/", SejfguruWeb do
+    pipe_through [:browser, :browser_auth]
+
+    get "/protected", PageController, :protected
+  end
 end

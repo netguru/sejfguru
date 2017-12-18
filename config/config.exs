@@ -21,8 +21,10 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :sejfguru, Sejfguru.Guardian,
-  issuer: "sejfguru_app"
+config :sejfguru, SejfguruWeb.AuthAccessPipeline,
+  issuer: "sejfguru_app",
+  module: SejfguruWeb.Guardian,
+  error_handler: SejfguruWeb.AuthErrorHandler
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
