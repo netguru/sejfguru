@@ -34,9 +34,9 @@ defmodule SejfguruWeb.AuthController do
 
   defp ensure_proper_domain(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     domain_from_callback = auth.extra.raw_info.user["hd"]
-    domain_form_config   = elem(Application.get_env(:ueberauth, Ueberauth)[:providers][:google], 1)[:hd]
+    domain_from_config   = elem(Application.get_env(:ueberauth, Ueberauth)[:providers][:google], 1)[:hd]
 
-    if domain_from_callback !== domain_form_config do
+    if domain_from_callback !== domain_from_config do
       conn
       |> put_flash(:error, "Failed to authenticate.")
       |> redirect(to: "/")
