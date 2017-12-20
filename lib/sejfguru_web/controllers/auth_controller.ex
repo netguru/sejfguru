@@ -26,22 +26,23 @@ defmodule SejfguruWeb.AuthController do
     end
   end
 
-  def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
-    conn
-    |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: "/")
-  end
-
   defp ensure_proper_domain(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     domain_from_callback = auth.extra.raw_info.user["hd"]
     domain_from_config   = elem(Application.get_env(:ueberauth, Ueberauth)[:providers][:google], 1)[:hd]
 
     if domain_from_callback !== domain_from_config do
-      conn
-      |> put_flash(:error, "Failed to authenticate.")
-      |> redirect(to: "/")
+      authentication_failure(conn)
     else
       conn
     end
+  end
+
+  defp ensure_proper_domain(%{assigns: %{ueberauth_failure: _fails}} = conn, _params), do: authentication_failure(conn)
+
+  defp authentication_failure(conn) do
+    conn
+    |> put_flash(:error, "Failed to authenticate.")
+    |> redirect(to: "/")
+    |> halt()
   end
 end
