@@ -4,4 +4,10 @@ defmodule SejfguruWeb.PageController do
   def index(conn, _params) do
     render conn, "index.html"
   end
+
+  def protected(conn, _params) do
+    conn
+    |> assign(:current_user, Guardian.Plug.current_resource(conn))
+    |> render("protected.html")
+  end
 end

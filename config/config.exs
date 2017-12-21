@@ -12,7 +12,6 @@ config :sejfguru,
 # Configures the endpoint
 config :sejfguru, SejfguruWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "P0ag3oSr11zr6Sn1IF8SLWI6ZZGaD5gEUhYO3w95HOFZm0dgZIo2Mr5YYtEY/2ag",
   render_errors: [view: SejfguruWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Sejfguru.PubSub,
            adapter: Phoenix.PubSub.PG2]
@@ -21,6 +20,11 @@ config :sejfguru, SejfguruWeb.Endpoint,
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
+
+config :sejfguru, SejfguruWeb.AuthAccessPipeline,
+  issuer: "sejfguru_app",
+  module: SejfguruWeb.Guardian,
+  error_handler: SejfguruWeb.AuthErrorHandler
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
