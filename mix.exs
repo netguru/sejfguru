@@ -44,6 +44,7 @@ defmodule Sejfguru.Mixfile do
       {:guardian, "~> 1.0"},
       {:ueberauth, "~> 0.4"},
       {:ueberauth_google, "~> 0.7"},
+      {:distillery, "~> 1.4", runtime: false},
     ]
   end
 
