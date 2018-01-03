@@ -10,4 +10,6 @@ priv/static/fonts/
 installer/_build/*
 installer/tmp/*
 
+config/*.secret.exs
+
 erl_crash.dump
