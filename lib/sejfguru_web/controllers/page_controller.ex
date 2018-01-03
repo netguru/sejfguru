@@ -8,6 +8,7 @@ defmodule SejfguruWeb.PageController do
   def protected(conn, _params) do
     conn
     |> assign(:current_user, Guardian.Plug.current_resource(conn))
+    |> assign(:assets, [])
     |> render("protected.html")
   end
 end
