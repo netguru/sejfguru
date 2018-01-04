@@ -21,7 +21,12 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :sejfguru, SejfguruWeb.AuthAccessPipeline,
+config :sejfguru, SejfguruWeb.AuthOptionalPipeline,
+  issuer: "sejfguru_app",
+  module: SejfguruWeb.Guardian,
+  error_handler: SejfguruWeb.AuthErrorHandler
+
+config :sejfguru, SejfguruWeb.AuthRequiredPipeline,
   issuer: "sejfguru_app",
   module: SejfguruWeb.Guardian,
   error_handler: SejfguruWeb.AuthErrorHandler
