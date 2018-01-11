@@ -1,0 +1,11 @@
+.git
+_build
+cover
+assets/node_modules
+deployment
+deps
+doc
+test
+tmp
+erl_crash.dump
+*.ez

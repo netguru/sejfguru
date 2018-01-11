@@ -30,13 +30,19 @@ environment :dev do
   # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: :"Ie>z&u@n$^hF}_>8eA`$a%k@o5iye*lh*?91v5e$NZFXQ8_8(]uq4{i1@R^2l$Uw"
+  set cookie: System.get_env("ERLANG_COOKIE")
+end
+
+environment :staging do
+  set include_erts: true
+  set include_src: false
+  set cookie: System.get_env("ERLANG_COOKIE")
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"POyZ@<TN*RMOD)09Bs//Rze_n(^Mbi?{b2Ga/@U(HCuq*IQyXc(<v7gCqJTGwnz9"
+  set cookie: System.get_env("ERLANG_COOKIE")
 end
 
 # You may define one or more releases in this file.
@@ -49,5 +55,7 @@ release :sejfguru do
   set applications: [
     :runtime_tools
   ]
+  set commands: [
+    "migrate": "rel/commands/migrate.sh"
+  ]
 end
-

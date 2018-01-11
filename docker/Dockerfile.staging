@@ -1,0 +1,53 @@
+#
+# Builder image:
+#
+FROM bitwalker/alpine-elixir:1.5.3 as builder
+
+ENV HOME=/opt/app/ TERM=xterm
+
+# Install assets builders
+RUN apk --no-cache add nodejs yarn && \
+    rm -rf /var/cache/apk/*
+
+WORKDIR ${HOME}
+
+ENV MIX_ENV=staging
+
+# Cache elixir deps
+RUN mkdir config
+COPY config/* config/
+COPY mix.exs mix.lock ./
+RUN mix do deps.get, deps.compile
+
+COPY assets assets
+# Install npm modules via yarn (optional)
+# RUN cd assets && yarn install && ./node_modules/.bin/brunch build --production
+RUN mix phx.digest
+
+COPY . .
+
+# Load environment variables from secrets.env file
+ADD secrets.env ./
+RUN source ./secrets.env
+RUN mix release --env=staging --verbose
+
+
+#
+# Real app image (minimal setup to be able to run application):
+#
+FROM bitwalker/alpine-erlang:20.2.1 as app
+
+RUN apk update && \
+    apk --no-cache --update add libgcc libstdc++ && \
+    rm -rf /var/cache/apk/*
+
+# Replace environment variables
+ENV PORT=4000 MIX_ENV=staging REPLACE_OS_VARS=true SHELL=/bin/sh
+
+COPY --from=builder /opt/app/_build/staging/rel/sejfguru ./
+
+RUN chown -R default ./
+
+USER default
+
+EXPOSE $PORT
