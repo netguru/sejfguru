@@ -24,7 +24,7 @@ namespace :deploy do
         execute :docker, "push #{fetch(:image)}"
 
         # run migration
-        execute :"docker-compose", compose("run --rm web bin/sejfguru command Elixir.Sejfguru.ReleaseTasks migrate")
+        execute :"docker-compose", compose("run --rm web bin/sejfguru migrate")
 
         execute :docker, "stack deploy -c docker-compose-#{fetch(:stage)}.yml --with-registry-auth #{fetch(:project)}"
       end
