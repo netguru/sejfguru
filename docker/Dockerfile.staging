@@ -21,7 +21,8 @@ RUN mix do deps.get, deps.compile
 
 COPY assets assets
 # Install npm modules via yarn (optional)
-# RUN cd assets && yarn install && ./node_modules/.bin/brunch build --production
+RUN cd assets && yarn install && ./node_modules/.bin/brunch build --production
+RUN cd ${HOME}
 RUN mix phx.digest
 
 COPY . .
