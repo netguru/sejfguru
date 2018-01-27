@@ -35,6 +35,9 @@ config :sejfguru, Sejfguru.Repo,
   port: System.get_env("DB_PORT"),
   pool_size: 10
 
+config :sejfguru, SejfguruWeb.Guardian,
+  secret_key: System.get_env("GUARDIAN_SECRET_KEY_BASE")
+
 config :ueberauth, Ueberauth,
   providers: [
     google: {Ueberauth.Strategy.Google, [request_path: "/auth", callback_path: "/auth-callback", default_scope: "email", hd: System.get_env("UEBERAUTH_GOOGLE_DOMAIN")]}
