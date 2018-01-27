@@ -13,15 +13,14 @@ WORKDIR ${HOME}
 
 ENV MIX_ENV=staging
 
-# Load environment variables from exported_secrets.env file
+# Add environment variables file from exported_secrets.env
 ADD exported_secrets.env ./
-RUN source ./exported_secrets.env
 
 # Cache elixir deps
 RUN mkdir config
 COPY config/* config/
 COPY mix.exs mix.lock ./
-RUN mix do deps.get, deps.compile
+RUN source ./exported_secrets.env && mix do deps.get, deps.compile
 
 COPY assets assets
 # Install npm modules via yarn (optional)
@@ -31,7 +30,7 @@ RUN mix phx.digest
 
 COPY . .
 
-RUN mix release --env=staging --verbose
+RUN source ./exported_secrets.env && mix release --env=staging --verbose
 
 #
 # Real app image (minimal setup to be able to run application):
