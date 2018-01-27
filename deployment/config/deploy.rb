@@ -9,7 +9,7 @@ namespace :deploy do
   after :updated, 'copy_files' do
     on roles(:app) do
       within release_path do
-        execute :cp, "#{fetch(:secrets_file)}", release_path.join("secrets.env")
+        execute :cp, "#{fetch(:secrets_file)}", release_path.join("exported_secrets.env")
       end
     end
   end

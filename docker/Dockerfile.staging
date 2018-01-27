@@ -28,8 +28,8 @@ RUN mix phx.digest
 COPY . .
 
 # Load environment variables from secrets.env file
-ADD secrets.env ./
-RUN source ./secrets.env
+ADD exported_secrets.env ./
+RUN source ./exported_secrets.env
 RUN mix release --env=staging --verbose
 
 
