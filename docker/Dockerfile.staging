@@ -5,8 +5,8 @@ FROM bitwalker/alpine-elixir:1.5.3 as builder
 
 ENV HOME=/opt/app/ TERM=xterm
 
-# Install assets builders
-RUN apk --no-cache add nodejs yarn && \
+# Install assets builders (python2 is used by node-gyp)
+RUN apk --no-cache add nodejs yarn python2 && \
     rm -rf /var/cache/apk/*
 
 WORKDIR ${HOME}
