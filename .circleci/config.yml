@@ -6,7 +6,11 @@ jobs:
       - image: bitwalker/alpine-elixir:1.5.3
         environment:
           - MIX_ENV: test
+          - DATABASE_URL: "ecto://sejfguru@localhost:5432/sejfguru_test"
       - image: postgres:9.6
+        environment:
+        - POSTGRES_USER=sejfguru
+        - POSTGRES_DB=sejfguru_test
     steps:
       - checkout
       - restore_cache:
@@ -25,6 +29,9 @@ jobs:
       - run:
           name: Run compile
           command: mix compile
+      - run:
+          name: Run migrations
+          command: mix ecto.migrate
       - run:
           name: Run Test
           command: mix test
