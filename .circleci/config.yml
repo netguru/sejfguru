@@ -1,0 +1,64 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/sejfguru
+    docker:
+      - image: bitwalker/alpine-elixir:1.5.3
+        environment:
+          - MIX_ENV: test
+      - image: postgres:9.6
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore elixir libraries cache
+          keys:
+            - deps-{{ checksum "mix.lock" }}
+      - run:
+          name: Install dependencies
+          command: |
+            mix deps.get
+      - save_cache:
+          name: Cache elixir libraries
+          key: deps-{{ checksum "mix.lock" }}
+          paths:
+            - deps
+      - run:
+          name: Run compile
+          command: mix compile
+      - run:
+          name: Run Test
+          command: mix test
+  deploy:
+    docker:
+      - image: circleci/ruby:2.4.1
+    working_directory: ~/sejfguru
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore ruby gems cache
+          keys:
+            - ruby-{{ checksum "deployment/Gemfile.lock" }}
+      - run:
+          name: Install ruby dependencies
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle --without development
+          working_directory: deployment
+      - save_cache:
+          name: Cache ruby gems
+          key: ruby-{{ checksum "deployment/Gemfile.lock" }}
+          paths:
+            - deployment/vendor
+      - run:
+          name: Run cap deploy
+          command: cap staging deploy
+          working_directory: deployment
+workflows:
+  version: 2
+  build_and_dep:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
