@@ -18,7 +18,7 @@ defmodule SejfguruWeb.PageControllerTest do
         |> Guardian.Plug.sign_in(user)
         |> get(page_path(conn, :protected))
 
-      assert html_response(conn, 200) =~ "Hello John"
+      assert html_response(conn, 200) =~ "Hello, John"
     end
 
     test "requires user to be sign in", %{conn: conn} do
