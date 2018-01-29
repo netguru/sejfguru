@@ -23,29 +23,6 @@ config :sejfguru, SejfguruWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :sejfguru, SejfguruWeb.Endpoint,
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
-
-config :sejfguru, Sejfguru.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("DB_USERNAME"),
-  database: System.get_env("DB_NAME"),
-  password: System.get_env("DB_PASSWORD"),
-  hostname: System.get_env("DB_HOST"),
-  port: System.get_env("DB_PORT"),
-  pool_size: 10
-
-config :sejfguru, SejfguruWeb.Guardian,
-  secret_key: System.get_env("GUARDIAN_SECRET_KEY_BASE")
-
-config :ueberauth, Ueberauth,
-  providers: [
-    google: {Ueberauth.Strategy.Google, [request_path: "/auth", callback_path: "/auth-callback", default_scope: "email", hd: System.get_env("UEBERAUTH_GOOGLE_DOMAIN")]}
-  ]
-config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("UEBERAUTH_GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("UEBERAUTH_GOOGLE_CLIENT_SECRET")
-
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
