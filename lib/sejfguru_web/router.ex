@@ -11,10 +11,12 @@ defmodule SejfguruWeb.Router do
 
   pipeline :browser_optional_auth do
     plug SejfguruWeb.AuthOptionalPipeline
+    plug SejfguruWeb.Plugs.CurrentUser
   end
 
   pipeline :browser_required_auth do
     plug SejfguruWeb.AuthRequiredPipeline
+    plug SejfguruWeb.Plugs.CurrentUser
   end
 
   pipeline :api do
