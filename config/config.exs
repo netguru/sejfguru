@@ -21,6 +21,16 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :sejfguru, SejfguruWeb.AuthOptionalPipeline,
+  issuer: "sejfguru_app",
+  module: SejfguruWeb.Guardian,
+  error_handler: SejfguruWeb.AuthErrorHandler
+
+config :sejfguru, SejfguruWeb.AuthRequiredPipeline,
+  issuer: "sejfguru_app",
+  module: SejfguruWeb.Guardian,
+  error_handler: SejfguruWeb.AuthErrorHandler
+
 config :sejfguru, SejfguruWeb.Endpoint,
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
@@ -35,11 +45,6 @@ config :sejfguru, Sejfguru.Repo,
 
 config :sejfguru, SejfguruWeb.Guardian,
   secret_key: System.get_env("GUARDIAN_SECRET_KEY_BASE")
-
-config :sejfguru, SejfguruWeb.AuthAccessPipeline,
-  issuer: "sejfguru_app",
-  module: SejfguruWeb.Guardian,
-  error_handler: SejfguruWeb.AuthErrorHandler
 
 config :ueberauth, Ueberauth,
   providers: [

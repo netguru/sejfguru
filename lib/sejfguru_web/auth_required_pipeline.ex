@@ -1,4 +1,4 @@
-defmodule SejfguruWeb.AuthAccessPipeline do
+defmodule SejfguruWeb.AuthRequiredPipeline do
   use Guardian.Plug.Pipeline, otp_app: :sejfguru
 
   plug Guardian.Plug.VerifySession
