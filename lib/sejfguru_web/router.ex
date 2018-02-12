@@ -34,6 +34,8 @@ defmodule SejfguruWeb.Router do
   scope "/", SejfguruWeb do
     pipe_through [:browser, :browser_required_auth]
 
+    get "/bookings/:asset_id", BookingController, :index
+    post "/bookings", BookingController, :create
     get "/protected", PageController, :protected
   end
 end
