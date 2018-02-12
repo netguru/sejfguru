@@ -5,10 +5,10 @@ defmodule Sejfguru.Mixfile do
     [
       app: :sejfguru,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env == :prod || Mix.env == :staging,
       aliases: aliases(),
       deps: deps()
     ]
@@ -44,6 +44,7 @@ defmodule Sejfguru.Mixfile do
       {:guardian, "~> 1.0"},
       {:ueberauth, "~> 0.4"},
       {:ueberauth_google, "~> 0.7"},
+      {:distillery, "~> 1.4", runtime: false},
     ]
   end
 
