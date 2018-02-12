@@ -1,7 +1,7 @@
-defmodule Sejfguru.Booking do
+defmodule Sejfguru.Bookings.Booking do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Sejfguru.Booking
+  alias Sejfguru.Bookings.Booking
 
 
   schema "bookings" do
