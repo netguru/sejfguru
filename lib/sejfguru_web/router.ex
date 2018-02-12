@@ -9,7 +9,7 @@ defmodule SejfguruWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :browser_auth do
+  pipeline :browser_auth_optional do
     plug SejfguruWeb.AuthOptionalPipeline
   end
 
@@ -22,7 +22,7 @@ defmodule SejfguruWeb.Router do
   end
 
   scope "/", SejfguruWeb do
-    pipe_through [:browser, :browser_auth]
+    pipe_through [:browser, :browser_auth_optional]
 
     get "/", PageController, :index
     get "/auth", AuthController, :request
