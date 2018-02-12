@@ -3,14 +3,12 @@ defmodule SejfguruWeb.PageController do
 
   def index(conn, _params) do
     conn
-    |> assign(:current_user, Guardian.Plug.current_resource(conn))
     |> render("index.html")
   end
 
   def protected(conn, _params) do
     conn
-    |> assign(:current_user, Guardian.Plug.current_resource(conn))
-    |> assign(:assets, [])
+    |> assign(:assets, [%{id: 1, name: 'Samsung Galaxy S8', location: 'Poznan' }]) # TODO: Put real assets here
     |> render("protected.html")
   end
 end

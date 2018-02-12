@@ -4,9 +4,10 @@
       <tr>
         <th scope="col">Asset ID</th>
         <th scope="col">Asset Name</th>
+        <th scope="col">Location</th>
         <th scope="col">Last User</th>
         <th scope="col">Last Borrowed</th>
-        <th scope="col">Actions</th>
+        <th scope="col" colspan="2">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -14,9 +15,11 @@
         <tr>
           <th scope="row"><%= asset.id %></th>
           <td><%= asset.name %></td>
+          <td><%= asset.location %></td>
           <td>N/A</td>
           <td>N/A</td>
-          <td><a href="#">Show history</a></td>
+          <td><a href="<%= booking_path(@conn, :index, asset.id) %>">Show history</a></td>
+          <td><%= link "Borrow", to: booking_path(@conn, :create, asset_id: asset.id), method: :post %></td>
         </tr>
       <% end %>
     </tbody>
