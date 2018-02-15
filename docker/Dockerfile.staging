@@ -6,7 +6,7 @@ FROM bitwalker/alpine-elixir:1.5.3 as builder
 ENV HOME=/opt/app/ TERM=xterm
 
 # Install assets builders (python is used by node-gyp)
-RUN apk --no-cache add nodejs=8.9.3-r0 yarn python2@edge=2.7.14-r2 make g++ && \
+RUN apk --no-cache add nodejs=8.9.3-r0 yarn python2@edge=2.7.14-r2 make g++ musl=1.1.18-r3 && \
     rm -rf /var/cache/apk/*
 
 WORKDIR ${HOME}
