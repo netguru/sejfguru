@@ -18,7 +18,7 @@ defmodule Sejfguru.Accounts.User do
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name, :email, :image, :google_uid])
-    |> validate_required([:first_name, :last_name, :email, :image, :google_uid])
+    |> validate_required([:email, :image, :google_uid])
     |> unique_constraint(:email)
     |> unique_constraint(:google_uid)
   end

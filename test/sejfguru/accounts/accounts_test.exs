@@ -6,9 +6,9 @@ defmodule Sejfguru.AccountsTest do
   describe "users" do
     alias Sejfguru.Accounts.User
 
-    @valid_attrs %{email: "some email", first_name: "some first_name", google_uid: "some google_uid", image: "some image", last_name: "some last_name"}
+    @valid_attrs %{email: "some email", google_uid: "some google_uid", image: "some image"}
     @update_attrs %{email: "some updated email", first_name: "some updated first_name", google_uid: "some updated google_uid", image: "some updated image", last_name: "some updated last_name"}
-    @invalid_attrs %{email: nil, first_name: nil, google_uid: nil, image: nil, last_name: nil}
+    @invalid_attrs %{email: nil, google_uid: nil, image: nil}
 
     def user_fixture(attrs \\ %{}) do
       {:ok, user} =
@@ -30,12 +30,21 @@ defmodule Sejfguru.AccountsTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
+      attrs_with_names = Map.merge(
+        @valid_attrs,
+        %{first_name: "some first_name", last_name: "some last_name"}
+      )
+
+      assert {:ok, %User{} = user} = Accounts.create_user(attrs_with_names)
       assert user.email == "some email"
       assert user.first_name == "some first_name"
+      assert user.last_name == "some last_name"
       assert user.google_uid == "some google_uid"
       assert user.image == "some image"
-      assert user.last_name == "some last_name"
+    end
+
+    test "create_user/1 allows empty first_name and last_name" do
+      assert {:ok, %User{}} = Accounts.create_user(@valid_attrs)
     end
 
     test "create_user/1 with invalid data returns error changeset" do
