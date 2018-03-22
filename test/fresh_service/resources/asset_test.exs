@@ -3,8 +3,6 @@ defmodule FreshService.AssetTest do
   import FreshService.Asset
 
   describe "all/1" do
-    url = "https://sample.freshservice.com/cmdb/items.json?page="
-
     test "returns list of Asset structs from page 1" do
       with_mocks([
         {FreshService.Config, [], [
