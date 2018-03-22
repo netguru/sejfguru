@@ -3,7 +3,9 @@
     <thead>
       <tr>
         <th scope="col">Asset ID</th>
-        <th scope="col">Asset Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Name</th>
+        <th scope="col">Details</th>
         <th scope="col">Location</th>
         <th scope="col">Last User</th>
         <th scope="col">Last Borrowed</th>
@@ -14,14 +16,24 @@
       <%= for asset <- @assets do %>
         <tr>
           <th scope="row"><%= asset.id %></th>
+          <td><%= asset.ci_type_name %></td>
           <td><%= asset.name %></td>
-          <td><%= asset.location %></td>
+          <td><%= asset.product_name %></td>
+          <td><%= asset.location_name %></td>
           <td>N/A</td>
           <td>N/A</td>
-          <td><a href="<%= booking_path(@conn, :index, asset.id) %>">Show history</a></td>
+          <td><%= link "Show history", to: booking_path(@conn, :index, asset.id) %></td>
           <td><%= link "Borrow", to: booking_path(@conn, :create, asset_id: asset.id), method: :post %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <div class="text-center">
+    <ul class="pagination">
+      <li><%= link "< Prev page", to: page_path(@conn, :protected, page: @page - 1) %></li>
+      <li><a href="#"><%= @page %></a></li>
+      <li><%= link "Next page >", to: page_path(@conn, :protected, page: @page + 1) %></li>
+    </ul>
+  </div>
 </div>
