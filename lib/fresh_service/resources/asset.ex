@@ -32,9 +32,9 @@ defmodule FreshService.Asset do
             usage_type: nil,
             used_by: nil,
             user_id: nil,
-            vendor_name: nil,
+            vendor_name: nil
 
-  def all do
-    get("cmdb/items.json", __MODULE__)
+  def all(page \\ 1) do
+    get("cmdb/items.json?page=#{page}", __MODULE__)
   end
 end
