@@ -2,11 +2,6 @@ defmodule FreshService.AssetTest do
   use Sejfguru.DataCase
   import FreshService.Asset
 
-  def json_response(map, status) do
-    {:ok, json} = Poison.encode(map)
-    %{body: json, status_code: status}
-  end
-
   describe "all/1" do
     url = "https://sample.freshservice.com/cmdb/items.json?page="
 

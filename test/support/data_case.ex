@@ -36,6 +36,11 @@ defmodule Sejfguru.DataCase do
     :ok
   end
 
+  def json_response(map, status) do
+    {:ok, json} = Poison.encode(map)
+    %{body: json, status_code: status}
+  end
+
   @doc """
   A helper that transform changeset errors to a map of messages.
 

@@ -6,11 +6,6 @@ defmodule FreshService.ApiTest do
     defstruct agent_id: nil
   end
 
-  def json_response(map, status) do
-    {:ok, json} = Poison.encode(map)
-    %{body: json, status_code: status}
-  end
-
   describe "get/2" do
     test "returns parsed response (with struct) from given path" do
       with_mocks([
