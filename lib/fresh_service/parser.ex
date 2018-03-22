@@ -1,44 +1,33 @@
 defmodule FreshService.Parser do
   @moduledoc """
-  A JSON parser tuned specifically for Twilio API responses. Based on Poison's
-  excellent JSON decoder.
+  A JSON parser for FreshService API responses.
   """
 
-  @type metadata         :: map
   @type http_status_code :: number
-  @type key              :: String.t
-  @type success          :: {:ok, [map]}
-  @type success_list     :: {:ok, [map], metadata}
-  @type success_delete   :: :ok
+  @type success          :: {:ok, map}
+  @type success_list     :: {:ok, [map]}
   @type error            :: {:error, String.t, http_status_code}
 
   @type parsed_response :: success | error
   @type parsed_list_response :: success_list | error
 
   @doc """
-  Parse a response expected to contain a single resource. If you pass in a
-  module as the first argument, the JSON will be parsed into that module's
-  `__struct__`.
+  Parse a response expected to contain a single resource. JSON will be parsed into
+  module's `__struct__`.
 
   ## Examples
 
-  Given you have a module named `Resource`, defined like this:
+  For a module named `Asset`:
 
-      defmodule Resource do
-        defstruct sid: nil
+      defmodule Asset do
+        defstruct id: nil
       end
 
-  You can parse JSON into that module's struct like so:
+  You can parse JSON into a struct like so:
 
-      iex> response = %{body: "{ \\"sid\\": \\"AD34123\\" }", status_code: 200}
-      ...> ExTwilio.Parser.parse(response, Resource)
-      {:ok, %Resource{sid: "AD34123"}}
-
-  You can also parse into a regular map if you want.
-
-      iex> response = %{body: "{ \\"sid\\": \\"AD34123\\" }", status_code: 200}
-      ...> ExTwilio.Parser.parse(response, %{})
-      {:ok, %{"sid" => "AD34123"}}
+      iex> response = %{body: "{ \\"id\\": \\"123\\" }", status_code: 200}
+      ...> FreshService.Parser.parse(response, Asset)
+      {:ok, %Asset{id: "123"}}
   """
   @spec parse(HTTPoison.Response.t, module) :: success | error
   def parse(response, module) do
@@ -48,33 +37,31 @@ defmodule FreshService.Parser do
   end
 
   @doc """
-  Parse a response expected to contain multiple resources. If you pass in a
-  module as the first argument, the JSON will be parsed into that module's
-  `__struct__`.
+  Parse a response expected to contain multiple resources. JSON will be parsed into
+  module's `__struct__`.
 
   ## Examples
 
-  Given you have a module named `Resource`, defined like this:
+  For a module named `Asset`:
 
-      defmodule Resource do
-        defstruct sid: nil
+      defmodule Asset do
+        defstruct id: nil
       end
 
-  And the JSON you are parsing looks like this:
+  And JSON in the following format:
+      [
+        {
+          id: "1"
+        },
+        {
+          id: "2"
+        }
+      ]
 
-      {
-        "resources": [{
-          "sid": "first"
-        }, {
-          "sid": "second"
-        }],
-        "next_page": 10
-      }
+  You can parse JSON into a struct like so:
 
-  You can parse the the JSON like this:
-
-      ExTwilio.Parser.parse_list(json, Resource, "resources")
-      {:ok, [%Resource{sid: "first"}, %Resource{sid: "second"}], %{"next_page" => 10}}
+      FreshService.Parser.parse_list(response, Asset)
+      {:ok, [%Asset{id: "1"}, %Asset{id: "2"}]}
   """
   @spec parse_list(HTTPoison.Response.t, module) :: success_list | error
   def parse_list(response, module) do
@@ -83,18 +70,21 @@ defmodule FreshService.Parser do
     end
   end
 
-  # @spec handle_errors(response, ((String.t) -> any)) :: success | success_delete | error
+  @spec handle_errors(HTTPoison.Response.t, ((String.t) -> any)) :: success | error
   defp handle_errors(response, fun) do
     case response do
       %{body: body, status_code: status} when status in [200, 201] ->
-        {:ok, fun.(body)}
-
-      %{body: _, status_code: 204} ->
-        :ok
-
-      %{body: body, status_code: status} ->
-        {:ok, json} = Poison.decode(body)
-        {:error, json["message"], status}
+        try do
+          {:ok, fun.(body)}
+        rescue
+          BadMapError -> format_error(body, status)
+        end
+      %{body: body, status_code: status} -> format_error(body, status)
     end
+  end
+
+  defp format_error(body, status) do
+    {:ok, json} = Poison.decode(body)
+    {:error, json, status}
   end
 end
