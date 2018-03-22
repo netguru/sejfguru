@@ -46,6 +46,7 @@ defmodule Sejfguru.Mixfile do
       {:ueberauth_google, "~> 0.7"},
       {:distillery, "~> 1.4", runtime: false},
       {:httpoison, "~> 1.0"},
+      {:mock, "~> 0.3.0", only: :test},
     ]
   end
 
