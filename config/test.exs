@@ -32,5 +32,3 @@ config :ueberauth, Ueberauth,
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: "test_client_id",
   client_secret: "test_client_secret"
-
-import_config "test.secret.exs"
