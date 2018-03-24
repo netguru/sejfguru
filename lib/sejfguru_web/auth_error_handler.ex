@@ -4,6 +4,6 @@ defmodule SejfguruWeb.AuthErrorHandler do
   def auth_error(conn, {type, _reason}, _opts) do
     conn
     |> put_flash(:error, to_string(type))
-    |> redirect(to: "/")
+    |> redirect(to: "/login")
   end
 end

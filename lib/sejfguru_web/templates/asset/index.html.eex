@@ -31,9 +31,9 @@
 
   <div class="text-center">
     <ul class="pagination">
-      <li><%= link "< Prev page", to: page_path(@conn, :protected, page: @page - 1) %></li>
+      <li><%= link "< Prev page", to: asset_path(@conn, :index, page: @page - 1) %></li>
       <li><a href="#"><%= @page %></a></li>
-      <li><%= link "Next page >", to: page_path(@conn, :protected, page: @page + 1) %></li>
+      <li><%= link "Next page >", to: asset_path(@conn, :index, page: @page + 1) %></li>
     </ul>
   </div>
 </div>

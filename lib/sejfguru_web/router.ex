@@ -26,7 +26,7 @@ defmodule SejfguruWeb.Router do
   scope "/", SejfguruWeb do
     pipe_through [:browser, :browser_optional_auth]
 
-    get "/", PageController, :index
+    get "/login", PageController, :login
     get "/auth", AuthController, :request
     get "/auth-callback", AuthController, :callback
   end
@@ -34,8 +34,9 @@ defmodule SejfguruWeb.Router do
   scope "/", SejfguruWeb do
     pipe_through [:browser, :browser_required_auth]
 
+    get "/", AssetController, :index, as: :root
+    resources "/assets", AssetController, only: [:index]
     get "/bookings/:asset_id", BookingController, :index
     post "/bookings", BookingController, :create
-    get "/protected", PageController, :protected
   end
 end

@@ -22,7 +22,7 @@ defmodule SejfguruWeb.AuthController do
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
-        |> redirect(to: "/")
+        |> redirect(to: "/login")
     end
   end
 
@@ -42,7 +42,7 @@ defmodule SejfguruWeb.AuthController do
   defp authentication_failure(conn) do
     conn
     |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: "/")
+    |> redirect(to: "/login")
     |> halt()
   end
 end

@@ -35,7 +35,7 @@ defmodule SejfguruWeb.AuthControllerTest do
         |> get("/auth-callback")
 
       assert get_flash(conn, :info) === "Successfully authenticated John"
-      assert redirected_to(conn) === page_path(conn, :index)
+      assert redirected_to(conn) === root_path(conn, :index)
       assert Guardian.Plug.current_resource(conn).google_uid === "123456"
     end
 
@@ -47,7 +47,7 @@ defmodule SejfguruWeb.AuthControllerTest do
         |> get("/auth-callback")
 
       assert get_flash(conn, :error) === "Failed to authenticate."
-      assert redirected_to(conn) === page_path(conn, :index)
+      assert redirected_to(conn) === page_path(conn, :login)
       assert Guardian.Plug.current_resource(conn) === nil
     end
 
@@ -58,7 +58,7 @@ defmodule SejfguruWeb.AuthControllerTest do
         |> get("/auth-callback")
 
       assert get_flash(conn, :error) === "Failed to authenticate."
-      assert redirected_to(conn) === page_path(conn, :index)
+      assert redirected_to(conn) === page_path(conn, :login)
       assert Guardian.Plug.current_resource(conn) === nil
     end
   end
