@@ -50,12 +50,12 @@ defmodule FreshService.Api do
   """
   @spec auth_header(headers :: list, auth :: tuple) :: list
   def auth_header(headers, {username, password}) when not is_nil(username) and not is_nil(password) do
-    case Keyword.has_key?(headers, :"Authorization") do
-      true -> headers
-      false ->
-        auth = Base.encode64("#{username}:#{password}")
-        headers
-        |> Keyword.put(:"Authorization", "Basic #{auth}")
+    if Keyword.has_key?(headers, :"Authorization") do
+      headers
+    else
+      auth = Base.encode64("#{username}:#{password}")
+      headers
+      |> Keyword.put(:"Authorization", "Basic #{auth}")
     end
   end
 
