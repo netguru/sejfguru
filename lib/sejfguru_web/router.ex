@@ -28,6 +28,7 @@ defmodule SejfguruWeb.Router do
 
     get "/login", PageController, :login
     get "/auth", AuthController, :request
+    delete "/auth", AuthController, :logout
     get "/auth-callback", AuthController, :callback
   end
 

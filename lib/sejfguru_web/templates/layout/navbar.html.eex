@@ -9,7 +9,17 @@
           <li class="active"><a href="<%= asset_path(@conn, :index) %>">Assets</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Hello, <%= @current_user.first_name %></a></li>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" id="dropdownNavbar"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+            >
+              Hello, <%= @current_user.first_name %>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
+              <li><%= link "Logout", to: auth_path(@conn, :logout), method: :delete %></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </nav>

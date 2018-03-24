@@ -62,4 +62,17 @@ defmodule SejfguruWeb.AuthControllerTest do
       assert Guardian.Plug.current_resource(conn) === nil
     end
   end
+
+  describe "DELETE /auth" do
+    alias Sejfguru.Accounts.User
+
+    test "logs out the user" do
+      conn = SejfguruWeb.Guardian.Plug.sign_in(build_conn(), %User{id: "1234"})
+      assert Guardian.Plug.current_resource(conn) === %User{id: "1234"}
+
+      conn = delete build_conn(), "/auth"
+      assert Guardian.Plug.current_resource(conn) === nil
+      assert redirected_to(conn) == "/login"
+    end
+  end
 end

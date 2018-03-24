@@ -26,6 +26,13 @@ defmodule SejfguruWeb.AuthController do
     end
   end
 
+  def logout(conn, _params) do
+    conn
+    |> Guardian.Plug.sign_out
+    |> put_flash(:info, "You have been logged out!")
+    |> redirect(to: "/login")
+  end
+
   defp ensure_proper_domain(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     domain_from_callback = auth.extra.raw_info.user["hd"]
     domain_from_config   = elem(Application.get_env(:ueberauth, Ueberauth)[:providers][:google], 1)[:hd]
