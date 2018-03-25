@@ -5,7 +5,7 @@ defmodule Sejfguru.Bookings.Booking do
 
 
   schema "bookings" do
-    field :fs_device_id, :string
+    field :fs_device_id, :integer
     field :returned_at, :utc_datetime
     belongs_to :user, Sejfguru.Accounts.User
 
