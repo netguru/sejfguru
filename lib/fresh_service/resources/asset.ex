@@ -37,4 +37,8 @@ defmodule FreshService.Asset do
   def all(page \\ 1) do
     get("cmdb/items.json?page=#{page}", __MODULE__)
   end
+
+  def find(display_id) do
+    get("cmdb/items/#{display_id}.json", __MODULE__)
+  end
 end
