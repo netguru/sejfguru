@@ -27,6 +27,7 @@ defmodule FreshService.Api do
   Builds custom auth header with only username and password given
 
   ## Examples
+
     iex> FreshService.Api.auth_header([username: 123, password: 123])
     ["Authorization": "Basic MTIzOjEyMw=="]
   """
@@ -46,7 +47,6 @@ defmodule FreshService.Api do
 
     iex> FreshService.Api.auth_header(["Authorization": "Basic BASE64=="], {123, 123})
     ["Authorization": "Basic BASE64=="]
-
   """
   @spec auth_header(headers :: list, auth :: tuple) :: list
   def auth_header(headers, {username, password}) when not is_nil(username) and not is_nil(password) do
