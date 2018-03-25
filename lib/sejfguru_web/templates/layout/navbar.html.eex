@@ -15,7 +15,7 @@
             >
               Hello, <%= @current_user.first_name %>
               <span class="caret"></span>
-            </button>
+            </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
               <li><%= link "Logout", to: auth_path(@conn, :logout), method: :delete %></li>
             </ul>
