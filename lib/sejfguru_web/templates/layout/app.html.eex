@@ -12,7 +12,9 @@
   </head>
 
   <body>
-    <%= render "navbar.html", assigns %>
+    <%= if assigns[:current_user] do %>
+      <%= render "navbar.html", assigns %>
+    <% end %>
 
     <div class="container">
       <%= if get_flash(@conn, :info) do %>
