@@ -6,9 +6,26 @@ defmodule SejfguruWeb.PageController do
     |> render("index.html")
   end
 
+  def protected(conn, %{"page" => page}) do
+    conn
+    |> assign(:page, String.to_integer(page))
+    |> assign(:assets, fetch_assets(page))
+    |> render("protected.html")
+  end
+
   def protected(conn, _params) do
     conn
-    |> assign(:assets, [%{id: 1, name: 'Samsung Galaxy S8', location: 'Poznan' }]) # TODO: Put real assets here
+    |> assign(:page, 1)
+    |> assign(:assets, fetch_assets(1))
     |> render("protected.html")
+  end
+
+  defp fetch_assets(page) do
+    case FreshService.Asset.all(page) do
+      {:ok, assets } ->
+        assets
+      _ ->
+        []
+    end
   end
 end

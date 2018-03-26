@@ -18,6 +18,7 @@ defmodule Sejfguru.DataCase do
     quote do
       alias Sejfguru.Repo
 
+      import Mock
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -33,6 +34,11 @@ defmodule Sejfguru.DataCase do
     end
 
     :ok
+  end
+
+  def json_response(map, status) do
+    {:ok, json} = Poison.encode(map)
+    %{body: json, status_code: status}
   end
 
   @doc """
