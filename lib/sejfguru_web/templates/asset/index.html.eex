@@ -15,7 +15,7 @@
     <tbody>
       <%= for asset <- @assets do %>
         <tr>
-          <th scope="row"><%= asset.id %></th>
+          <th scope="row"><%= asset.display_id %></th>
           <td><%= asset.ci_type_name %></td>
           <td><%= asset.name %></td>
           <td><%= asset.product_name %></td>

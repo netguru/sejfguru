@@ -17,17 +17,13 @@ defmodule FreshService.Parser do
 
   ## Examples
 
-  For a module named `Asset`:
+  For a module named TestAsset you can parse JSON into a struct like so:
 
-      defmodule Asset do
-        defstruct id: nil
-      end
-
-  You can parse JSON into a struct like so:
-
+      iex> import FreshService.TestAsset
+      iex> alias FreshService.TestAsset
       iex> response = %{body: "{ \\"id\\": \\"123\\" }", status_code: 200}
-      ...> FreshService.Parser.parse(response, Asset)
-      {:ok, %Asset{id: "123"}}
+      iex> FreshService.Parser.parse(response, TestAsset)
+      {:ok, %TestAsset{id: "123"}}
   """
   @spec parse(HTTPoison.Response.t, module) :: success | error
   def parse(response, module) do
@@ -42,26 +38,12 @@ defmodule FreshService.Parser do
 
   ## Examples
 
-  For a module named `Asset`:
-
-      defmodule Asset do
-        defstruct id: nil
-      end
-
-  And JSON in the following format:
-      [
-        {
-          id: "1"
-        },
-        {
-          id: "2"
-        }
-      ]
-
-  You can parse JSON into a struct like so:
-
-      FreshService.Parser.parse_list(response, Asset)
-      {:ok, [%Asset{id: "1"}, %Asset{id: "2"}]}
+  For a module named TestAsset and JSON in the following format you can parse JSON into a struct like so:
+      iex> import FreshService.TestAsset
+      iex> alias FreshService.TestAsset
+      iex> response = %{body: "[ { \\"id\\": \\"1\\"} , { \\"id\\": \\"2\\" } ]", status_code: 200}
+      iex> FreshService.Parser.parse_list(response, TestAsset)
+      {:ok, [%TestAsset{id: "1"}, %TestAsset{id: "2"}]}
   """
   @spec parse_list(HTTPoison.Response.t, module) :: success_list | error
   def parse_list(response, module) do
