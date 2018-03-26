@@ -1,10 +1,8 @@
 defmodule FreshService.ApiTest do
   use Sejfguru.DataCase
+  alias FreshService.TestAsset
   import FreshService.Api
-
-  defmodule Asset do
-    defstruct agent_id: nil
-  end
+  doctest FreshService.Api
 
   describe "get/2" do
     test "returns parsed response (with struct) from given path" do
@@ -14,9 +12,9 @@ defmodule FreshService.ApiTest do
           username: fn() -> "user" end,
           password: fn() -> "secret" end
         ]},
-        {FreshService.Api, [:passthrough], [get!: fn(_url, _headers) -> json_response([%{agent_id: "id"}], 200) end]}
+        {FreshService.Api, [:passthrough], [get!: fn(_url, _headers) -> json_response([%{id: "id"}], 200) end]}
       ]) do
-        assert {:ok, [%FreshService.ApiTest.Asset{agent_id: "id"}]} == get("/test.json", Asset)
+        assert {:ok, [%TestAsset{id: "id"}]} == get("/test.json", TestAsset)
       end
     end
   end

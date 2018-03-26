@@ -1,6 +1,6 @@
 defmodule FreshService.Config do
   @moduledoc """
-  Stores configuration variables used to communicate with FreshService's API.
+  Reads mix configuration used to communicate with FreshService's API.
 
   All settings also accept `{:system, "ENV_VAR_NAME"}` to read their
   values from environment variables at runtime.
