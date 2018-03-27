@@ -1,0 +1,26 @@
+<header class="header">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Sejfguru</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="<%= asset_path(@conn, :index) %>">Assets</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" id="dropdownNavbar"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+          >
+            Hello, <%= @current_user.first_name %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
+            <li><%= link "Logout", to: auth_path(@conn, :logout), method: :delete %></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <span class="logo"></span>
+</header>

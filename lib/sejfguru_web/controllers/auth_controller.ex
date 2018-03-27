@@ -22,8 +22,15 @@ defmodule SejfguruWeb.AuthController do
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
-        |> redirect(to: "/")
+        |> redirect(to: "/login")
     end
+  end
+
+  def logout(conn, _params) do
+    conn
+    |> Guardian.Plug.sign_out
+    |> put_flash(:info, "You have been logged out!")
+    |> redirect(to: "/login")
   end
 
   defp ensure_proper_domain(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
@@ -42,7 +49,7 @@ defmodule SejfguruWeb.AuthController do
   defp authentication_failure(conn) do
     conn
     |> put_flash(:error, "Failed to authenticate.")
-    |> redirect(to: "/")
+    |> redirect(to: "/login")
     |> halt()
   end
 end
