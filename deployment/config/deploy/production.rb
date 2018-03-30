@@ -4,7 +4,7 @@ set :dockerfile, -> { 'docker/Dockerfile.production' }
 
 namespace :deploy do
   def compose(cmd)
-    "-p #{fetch(:project)}-prerun -f docker-compose-#{fetch(:stage)}.yml #{cmd}"
+    "-p #{fetch(:project)} -f docker-compose-#{fetch(:stage)}.yml #{cmd}"
   end
 
   after :updated, 'compose:deploy' do
