@@ -1,5 +1,5 @@
 server ENV['PRODUCTION_SERVER'], user: ENV['PRODUCTION_USER'], roles: %w[app db web]
-set :branch, 'production-correction'
+set :branch, 'production'
 set :dockerfile, -> { 'docker/Dockerfile.production' }
 set :project, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
