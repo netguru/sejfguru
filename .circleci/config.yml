@@ -58,6 +58,29 @@ jobs:
           name: Run cap deploy
           command: cap staging deploy
           working_directory: deployment
+  deploy_production:
+    docker:
+      - image: circleci/ruby:2.4.1
+    working_directory: ~/sejfguru
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore ruby gems cache
+          keys:
+            - ruby-{{ checksum "deployment/Gemfile.lock" }}
+      - run:
+          name: Install ruby dependencies
+          command: bundle install --jobs=4 --retry=3 --path vendor/bundle --without development
+          working_directory: deployment
+      - save_cache:
+          name: Cache ruby gems
+          key: ruby-{{ checksum "deployment/Gemfile.lock" }}
+          paths:
+            - deployment/vendor
+      - run:
+          name: Run cap deploy
+          command: cap production deploy
+          working_directory: deployment
 workflows:
   version: 2
   build_and_dep:
@@ -69,3 +92,9 @@ workflows:
           filters:
             branches:
               only: master
+      - deploy_production:
+          requires:
+            - build
+          filters:
+            branches:
+              only: production
