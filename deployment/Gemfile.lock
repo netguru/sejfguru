@@ -8,8 +8,6 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
-    capose (0.2.0)
-      capistrano (~> 3.7)
     concurrent-ruby (1.0.5)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
@@ -26,7 +24,6 @@ PLATFORMS
 
 DEPENDENCIES
   capistrano (= 3.9.0)
-  capose
 
 BUNDLED WITH
    1.14.6

@@ -1,10 +1,21 @@
 server ENV['PRODUCTION_SERVER'], user: ENV['PRODUCTION_USER'], roles: %w[app db web]
 set :branch, 'production-setup'
 set :dockerfile, -> { 'docker/Dockerfile.production' }
-set :capose_commands, -> {
-  [
-    'build',
-    'run --rm web bin/sejfguru migrate',
-    'up -d'
-  ]
-}
+
+namespace :deploy do
+  def compose(cmd)
+    "-p #{fetch(:project)}-prerun -f docker-compose-#{fetch(:stage)}.yml #{cmd}"
+  end
+
+  after :updated, 'compose:deploy' do
+    on roles(:app) do
+      within release_path do
+        execute :docker, "build -t #{fetch(:image)} -f #{fetch(:dockerfile)} ."
+        # run migration
+        execute :"docker-compose", compose("run --rm web bin/sejfguru migrate")
+
+        execute :docker, "docker-compose -f docker-compose-#{fetch(:stage)}.yml up -d"
+      end
+    end
+  end
+end
