@@ -1,7 +1,7 @@
 server ENV['PRODUCTION_SERVER'], user: ENV['PRODUCTION_USER'], roles: %w[app db web]
 set :branch, 'production-correction'
 set :dockerfile, -> { 'docker/Dockerfile.production' }
-set :project, -> { "#{fetch(:application)}-#{fetch(:stage)}" }
+set :project, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
   def compose(cmd)
