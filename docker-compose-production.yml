@@ -1,0 +1,19 @@
+version: "3.2"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.production
+    command: /opt/app/bin/sejfguru foreground
+    env_file: /home/deploy/apps/sejfguru/shared/secrets.env
+    restart: always
+    labels:
+      - netguru.appname=sejfguru
+      - netguru.stage=production
+    hostname: netguru.sejfguru.production.web
+    networks:
+      - frontend
+networks:
+  frontend:
+    external:
+      name: frontend

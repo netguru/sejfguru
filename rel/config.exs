@@ -39,7 +39,7 @@ environment :staging do
   set cookie: System.get_env("ERLANG_COOKIE")
 end
 
-environment :prod do
+environment :production do
   set include_erts: true
   set include_src: false
   set cookie: System.get_env("ERLANG_COOKIE")
