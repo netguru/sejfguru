@@ -49,7 +49,7 @@ config :sejfguru, SejfguruWeb.Guardian,
 config :ueberauth, Ueberauth,
   providers: [
     google: {Ueberauth.Strategy.Google, [
-      request_path: "/auth", callback_path: "/auth-callback", default_scope: "email profiles",
+      request_path: "/auth", callback_path: "/auth-callback", default_scope: "email profile",
       hd: System.get_env("UEBERAUTH_GOOGLE_DOMAIN")
     ]}
   ]
