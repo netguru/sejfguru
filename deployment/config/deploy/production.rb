@@ -10,7 +10,7 @@ namespace :deploy do
   after :updated, 'compose:deploy' do
     on roles(:app) do
       within release_path do
-        execute :"docker-compose", "build -f docker-compose-#{fetch(:stage)}.yml"
+        execute :"docker-compose", "-f docker-compose-#{fetch(:stage)}.yml build"
         # run migration
         execute :"docker-compose", compose("run --rm web bin/sejfguru migrate")
 
