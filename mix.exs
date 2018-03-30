@@ -8,7 +8,7 @@ defmodule Sejfguru.Mixfile do
       elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      start_permanent: Mix.env == :prod || Mix.env == :staging,
+      start_permanent: Mix.env == :production || Mix.env == :staging,
       aliases: aliases(),
       deps: deps()
     ]
