@@ -6,4 +6,4 @@ install_plugin Capistrano::SCM::Git
 task :capose do
   require 'capose'
 end
-task 'production' -> [:capose]
+task 'production' => [:capose]
