@@ -132,7 +132,7 @@ defmodule Sejfguru.Assets do
       %Ecto.Changeset{source: %Asset{}}
 
   """
-  def delete_asset(%Asset{} = asset) do
+  def change_asset(%Asset{} = asset) do
     Asset.changeset(asset, %{})
   end
 end
