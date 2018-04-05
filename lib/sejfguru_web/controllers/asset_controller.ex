@@ -1,10 +1,11 @@
 defmodule SejfguruWeb.AssetController do
   use SejfguruWeb, :controller
+  require Ecto.Query
 
   def index(conn, params) do
     conn
     |> assign(:page, fetch_page(params))
-    |> assign(:assets, fetch_assets(1))
+    |> assign(:assets, fetch_assets(fetch_page(params)))
     |> render("index.html")
   end
 
@@ -12,11 +13,8 @@ defmodule SejfguruWeb.AssetController do
   defp fetch_page(_params), do: 1
 
   defp fetch_assets(page) do
-    case FreshService.Asset.all(page) do
-      {:ok, assets } ->
-        assets
-      _ ->
-        []
-    end
+    Sejfguru.Assets.Asset
+      |> Ecto.Query.where(type_name: "Mobile")
+      |> Sejfguru.Repo.all
   end
 end
