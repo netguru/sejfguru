@@ -17,6 +17,8 @@ defmodule Sejfguru.Assets.Asset do
     field :values, :map
     field :vendor_name, :string
 
+    has_many :bookings, Sejfguru.Bookings.Booking
+
     timestamps()
   end
 
