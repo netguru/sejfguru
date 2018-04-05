@@ -13,8 +13,6 @@ defmodule SejfguruWeb.AssetController do
   defp fetch_page(_params), do: 1
 
   defp fetch_assets(page) do
-    Sejfguru.Assets.Asset
-      |> Ecto.Query.where(type_name: "Mobile")
-      |> Sejfguru.Repo.all
+    Sejfguru.Assets.list_assets(type: "Mobile", page: page)
   end
 end

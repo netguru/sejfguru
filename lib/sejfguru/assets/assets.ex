@@ -21,6 +21,22 @@ defmodule Sejfguru.Assets do
     Repo.all(Asset)
   end
 
+   @doc """
+  Returns the list of assets of given type paginated.
+
+  ## Examples
+
+      iex> list_assets(type: "Mobile", page: 1)
+      [%Asset{}, ...]
+
+  """
+  def list_assets(type: type, page: page) do
+    Asset
+      |> Ecto.Query.where(type_name: ^type)
+      |> Ecto.Query.order_by(:name)
+      |> Repo.paginate(page: page)
+  end
+
   @doc """
   Gets a single asset.
 
