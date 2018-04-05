@@ -28,8 +28,8 @@ defmodule Sejfguru.Assets.AssetImporter do
 
   defp insert_asset(asset) do
     case asset |> format_attrs |> Sejfguru.Assets.upsert_asset do
-      { :ok, asset } -> true
-      { :error, changeset } -> false
+      { :ok, _ } -> true
+      { :error, _ } -> false
     end
   end
 
