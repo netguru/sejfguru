@@ -1,35 +1,37 @@
 defmodule Sejfguru.Assets.AssetImporter do
-
   def import do
     import_page(1)
   end
 
   defp import_page(page) do
+    case import_assets(page) do
+      {:ok} -> import_page(page + 1)
+      {:error} -> {:error, "Freshservice assets import finished with error on page #{page}"}
+      [] -> {:ok, "Freshservice assets imported successfully from #{page - 1} pages"}
+    end
+  end
+
+  defp import_assets(page) do
     case fetch_assets(page) do
-      [] -> { :ok, "Freshservice assets imported successfully from #{page-1} pages" }
-      assets -> insert_assets(assets, page)
+      [] ->
+        []
+
+      assets ->
+        if Enum.all?(assets, fn asset -> insert_asset(asset) end), do: {:ok}, else: {:error}
     end
   end
 
   defp fetch_assets(page) do
     case FreshService.Asset.all(page) do
-      {:ok, assets } -> assets
+      {:ok, assets} -> assets
       _ -> []
     end
   end
 
-  defp insert_assets(assets, page) do
-    if Enum.all?(assets, fn(asset) -> insert_asset(asset) end) do
-      import_page(page+1)
-    else
-      { :error, "Freshservice assets import finished with error on page #{page}" }
-    end
-  end
-
   defp insert_asset(asset) do
-    case asset |> format_attrs |> Sejfguru.Assets.upsert_asset do
-      { :ok, _ } -> true
-      { :error, _ } -> false
+    case asset |> format_attrs |> Sejfguru.Assets.upsert_asset() do
+      {:ok, _} -> true
+      {:error, _} -> false
     end
   end
 
