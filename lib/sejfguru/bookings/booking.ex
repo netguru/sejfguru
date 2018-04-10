@@ -5,9 +5,9 @@ defmodule Sejfguru.Bookings.Booking do
 
 
   schema "bookings" do
-    field :fs_device_id, :string
     field :returned_at, :utc_datetime
     belongs_to :user, Sejfguru.Accounts.User
+    belongs_to :asset, Sejfguru.Assets.Asset
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule Sejfguru.Bookings.Booking do
   @doc false
   def changeset(%Booking{} = booking, attrs) do
     booking
-    |> cast(attrs, [:fs_device_id, :user_id])
-    |> validate_required([:fs_device_id, :user_id])
+    |> cast(attrs, [:asset_id, :user_id])
+    |> validate_required([:asset_id, :user_id])
   end
 end
