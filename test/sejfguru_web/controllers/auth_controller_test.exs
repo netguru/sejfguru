@@ -5,7 +5,8 @@ defmodule SejfguruWeb.AuthControllerTest do
     test "redirects to google signin page", %{conn: conn} do
       conn = get(conn, auth_path(conn, :request))
 
-      assert redirected_to(conn) === "https://accounts.google.com/o/oauth2/v2/auth?client_id=test_client_id&hd=example.com&redirect_uri=http%3A%2F%2Fwww.example.com%2Fauth-callback&response_type=code&scope=email"
+      assert redirected_to(conn) ===
+               "https://accounts.google.com/o/oauth2/v2/auth?client_id=test_client_id&hd=example.com&redirect_uri=http%3A%2F%2Fwww.example.com%2Fauth-callback&response_type=code&scope=email"
     end
 
     test "passes client_id, hd and scope params", %{conn: conn} do
@@ -28,10 +29,17 @@ defmodule SejfguruWeb.AuthControllerTest do
         email: "test@example.com",
         image: "http://example.com/image.jpg"
       }
+
       extra_data = %{raw_info: %{user: %{"hd" => "example.com"}}}
+
       conn =
         conn
-        |> assign(:ueberauth_auth, %{provider: :google, info: user_data, uid: "123456", extra: extra_data})
+        |> assign(:ueberauth_auth, %{
+          provider: :google,
+          info: user_data,
+          uid: "123456",
+          extra: extra_data
+        })
         |> get("/auth-callback")
 
       assert get_flash(conn, :info) === "Successfully authenticated John"
@@ -41,6 +49,7 @@ defmodule SejfguruWeb.AuthControllerTest do
 
     test "spoofed domain causes auth failure", %{conn: conn} do
       extra_data = %{raw_info: %{user: %{"hd" => "spoofed.com"}}}
+
       conn =
         conn
         |> assign(:ueberauth_auth, %{provider: :google, extra: extra_data})
@@ -70,7 +79,7 @@ defmodule SejfguruWeb.AuthControllerTest do
       conn = SejfguruWeb.Guardian.Plug.sign_in(build_conn(), %User{id: "1234"})
       assert Guardian.Plug.current_resource(conn) === %User{id: "1234"}
 
-      conn = delete build_conn(), "/auth"
+      conn = delete(build_conn(), "/auth")
       assert Guardian.Plug.current_resource(conn) === nil
       assert redirected_to(conn) == "/login"
     end

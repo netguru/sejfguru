@@ -39,6 +39,7 @@ defmodule FreshService.Config do
   `{:system, "VAR"}` tuples.
   """
   def from_env(key, default \\ nil)
+
   def from_env(key, default) do
     Application.get_env(:sejfguru, FreshService)
     |> Keyword.get(key)
