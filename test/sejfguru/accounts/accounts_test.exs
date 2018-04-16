@@ -7,7 +7,13 @@ defmodule Sejfguru.AccountsTest do
     alias Sejfguru.Accounts.User
 
     @valid_attrs %{email: "some email", google_uid: "some google_uid", image: "some image"}
-    @update_attrs %{email: "some updated email", first_name: "some updated first_name", google_uid: "some updated google_uid", image: "some updated image", last_name: "some updated last_name"}
+    @update_attrs %{
+      email: "some updated email",
+      first_name: "some updated first_name",
+      google_uid: "some updated google_uid",
+      image: "some updated image",
+      last_name: "some updated last_name"
+    }
     @invalid_attrs %{email: nil, google_uid: nil, image: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -30,10 +36,8 @@ defmodule Sejfguru.AccountsTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      attrs_with_names = Map.merge(
-        @valid_attrs,
-        %{first_name: "some first_name", last_name: "some last_name"}
-      )
+      attrs_with_names =
+        Map.merge(@valid_attrs, %{first_name: "some first_name", last_name: "some last_name"})
 
       assert {:ok, %User{} = user} = Accounts.create_user(attrs_with_names)
       assert user.email == "some email"

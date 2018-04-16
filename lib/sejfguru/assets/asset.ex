@@ -25,8 +25,19 @@ defmodule Sejfguru.Assets.Asset do
   @doc false
   def changeset(%Asset{} = asset, attrs) do
     asset
-    |> cast(attrs, [:department_name, :description, :freshservice_id, :location_name,
-                    :name, :product_name, :state_name, :tag, :type_name, :used_by,
-                    :values, :vendor_name])
+    |> cast(attrs, [
+      :department_name,
+      :description,
+      :freshservice_id,
+      :location_name,
+      :name,
+      :product_name,
+      :state_name,
+      :tag,
+      :type_name,
+      :used_by,
+      :values,
+      :vendor_name
+    ])
   end
 end

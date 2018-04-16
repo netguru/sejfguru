@@ -6,13 +6,14 @@ defmodule SejfguruWeb.PageControllerTest do
 
   describe "GET /login" do
     test "redirects logged in user", %{conn: conn} do
-      {:ok, user} = Accounts.create_user(%{
-        first_name: "John",
-        last_name: "Doe",
-        email: "test@example.com",
-        image: "http://example.com/image.jpg",
-        google_uid: "123456",
-      })
+      {:ok, user} =
+        Accounts.create_user(%{
+          first_name: "John",
+          last_name: "Doe",
+          email: "test@example.com",
+          image: "http://example.com/image.jpg",
+          google_uid: "123456"
+        })
 
       conn =
         conn

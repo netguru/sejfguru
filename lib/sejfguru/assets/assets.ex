@@ -21,7 +21,7 @@ defmodule Sejfguru.Assets do
     Repo.all(Asset)
   end
 
-   @doc """
+  @doc """
   Returns the list of assets of given type paginated.
 
   ## Examples
@@ -32,9 +32,9 @@ defmodule Sejfguru.Assets do
   """
   def list_assets(type: type, page: page) do
     Asset
-      |> Ecto.Query.where(type_name: ^type)
-      |> Ecto.Query.order_by(:name)
-      |> Repo.paginate(page: page)
+    |> Ecto.Query.where(type_name: ^type)
+    |> Ecto.Query.order_by(:name)
+    |> Repo.paginate(page: page)
   end
 
   @doc """

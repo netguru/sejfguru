@@ -11,7 +11,7 @@ defmodule Sejfguru.Assets.PeriodicalAssetImporter do
   end
 
   def handle_info(:work, state) do
-    work(Mix.env)
+    work(Mix.env())
     schedule_work(hours: 24)
     {:noreply, state}
   end
@@ -23,7 +23,7 @@ defmodule Sejfguru.Assets.PeriodicalAssetImporter do
   defp work(:test), do: nil
 
   defp work(_) do
-    {_, info} = Sejfguru.Assets.AssetImporter.import
-    IO.puts("[#{DateTime.utc_now}] #{info}")
+    {_, info} = Sejfguru.Assets.AssetImporter.import()
+    IO.puts("[#{DateTime.utc_now()}] #{info}")
   end
 end

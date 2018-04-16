@@ -3,7 +3,6 @@ defmodule Sejfguru.Accounts.User do
   import Ecto.Changeset
   alias Sejfguru.Accounts.User
 
-
   schema "users" do
     field :email, :string
     field :first_name, :string

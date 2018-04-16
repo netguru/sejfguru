@@ -6,15 +6,20 @@ defmodule SejfguruWeb.AssetControllerTest do
 
   describe "GET /assets" do
     test "renders page with devices", %{conn: conn} do
-      {:ok, user} = Accounts.create_user(%{
-        first_name: "John",
-        last_name: "Doe",
-        email: "test@example.com",
-        image: "http://example.com/image.jpg",
-        google_uid: "123456",
-      })
+      {:ok, user} =
+        Accounts.create_user(%{
+          first_name: "John",
+          last_name: "Doe",
+          email: "test@example.com",
+          image: "http://example.com/image.jpg",
+          google_uid: "123456"
+        })
 
-      Sejfguru.Assets.create_asset(%{freshservice_id: 523, type_name: "Mobile", name: "Test device"})
+      Sejfguru.Assets.create_asset(%{
+        freshservice_id: 523,
+        type_name: "Mobile",
+        name: "Test device"
+      })
 
       conn =
         conn

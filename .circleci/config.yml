@@ -30,6 +30,12 @@ jobs:
           name: Run compile
           command: mix compile
       - run:
+          name: Elixir formatter
+          command: mix format --check-formatted --dry-run
+      - run:
+          name: Run Credo Linter
+          command: mix credo
+      - run:
           name: Run migrations
           command: mix ecto.migrate
       - run:
