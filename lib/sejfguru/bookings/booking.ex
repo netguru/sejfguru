@@ -3,7 +3,6 @@ defmodule Sejfguru.Bookings.Booking do
   import Ecto.Changeset
   alias Sejfguru.Bookings.Booking
 
-
   schema "bookings" do
     field :returned_at, :utc_datetime
     belongs_to :user, Sejfguru.Accounts.User
