@@ -30,6 +30,9 @@ jobs:
           name: Run compile
           command: mix compile
       - run:
+          name: Elixir formatter
+          command: mix format --check-formatted --dry-run
+      - run:
           name: Run migrations
           command: mix ecto.migrate
       - run:
