@@ -4,9 +4,9 @@ defmodule FreshService.Parser do
   """
 
   @type http_status_code :: number
-  @type success :: {:ok, map}
-  @type success_list :: {:ok, [map]}
-  @type error :: {:error, String.t(), http_status_code}
+  @type success          :: {:ok, map}
+  @type success_list     :: {:ok, [map]}
+  @type error            :: {:error, String.t, http_status_code}
 
   @type parsed_response :: success | error
   @type parsed_list_response :: success_list | error
@@ -25,11 +25,11 @@ defmodule FreshService.Parser do
       iex> FreshService.Parser.parse(response, TestAsset)
       {:ok, %TestAsset{id: "123"}}
   """
-  @spec parse(HTTPoison.Response.t(), module) :: success | error
+  @spec parse(HTTPoison.Response.t, module) :: success | error
   def parse(response, module) do
-    handle_errors(response, fn body ->
+    handle_errors response, fn(body) ->
       Poison.decode!(body, as: module.__struct__)
-    end)
+    end
   end
 
   @doc """
@@ -45,14 +45,14 @@ defmodule FreshService.Parser do
       iex> FreshService.Parser.parse_list(response, TestAsset)
       {:ok, [%TestAsset{id: "1"}, %TestAsset{id: "2"}]}
   """
-  @spec parse_list(HTTPoison.Response.t(), module) :: success_list | error
+  @spec parse_list(HTTPoison.Response.t, module) :: success_list | error
   def parse_list(response, module) do
-    handle_errors(response, fn body ->
+    handle_errors response, fn(body) ->
       Poison.decode!(body, as: [module.__struct__])
-    end)
+    end
   end
 
-  @spec handle_errors(HTTPoison.Response.t(), (String.t() -> any)) :: success | error
+  @spec handle_errors(HTTPoison.Response.t, ((String.t) -> any)) :: success | error
   defp handle_errors(response, fun) do
     case response do
       %{body: body, status_code: status} when status in [200, 201] ->
@@ -61,9 +61,7 @@ defmodule FreshService.Parser do
         rescue
           BadMapError -> format_error(body, status)
         end
-
-      %{body: body, status_code: status} ->
-        format_error(body, status)
+      %{body: body, status_code: status} -> format_error(body, status)
     end
   end
 

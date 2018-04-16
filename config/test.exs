@@ -26,14 +26,7 @@ config :sejfguru, SejfguruWeb.Guardian,
 
 config :ueberauth, Ueberauth,
   providers: [
-    google:
-      {Ueberauth.Strategy.Google,
-       [
-         request_path: "/auth",
-         callback_path: "/auth-callback",
-         default_scope: "email",
-         hd: "example.com"
-       ]}
+    google: {Ueberauth.Strategy.Google, [request_path: "/auth", callback_path: "/auth-callback", default_scope: "email", hd: "example.com"]}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,

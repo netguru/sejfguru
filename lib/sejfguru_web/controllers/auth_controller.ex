@@ -1,8 +1,8 @@
 defmodule SejfguruWeb.AuthController do
   use SejfguruWeb, :controller
 
-  plug(Ueberauth)
-  plug(:ensure_proper_domain when action in [:callback])
+  plug Ueberauth
+  plug :ensure_proper_domain when action in [:callback]
 
   alias Sejfguru.Accounts
   alias SejfguruWeb.Guardian
@@ -19,7 +19,6 @@ defmodule SejfguruWeb.AuthController do
         |> Guardian.Plug.sign_in(user)
         |> put_flash(:info, "Successfully authenticated #{user.first_name}")
         |> redirect(to: "/")
-
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
@@ -29,16 +28,14 @@ defmodule SejfguruWeb.AuthController do
 
   def logout(conn, _params) do
     conn
-    |> Guardian.Plug.sign_out()
+    |> Guardian.Plug.sign_out
     |> put_flash(:info, "You have been logged out!")
     |> redirect(to: "/login")
   end
 
   defp ensure_proper_domain(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     domain_from_callback = auth.extra.raw_info.user["hd"]
-
-    domain_from_config =
-      elem(Application.get_env(:ueberauth, Ueberauth)[:providers][:google], 1)[:hd]
+    domain_from_config   = elem(Application.get_env(:ueberauth, Ueberauth)[:providers][:google], 1)[:hd]
 
     if domain_from_callback !== domain_from_config do
       authentication_failure(conn)
@@ -47,8 +44,7 @@ defmodule SejfguruWeb.AuthController do
     end
   end
 
-  defp ensure_proper_domain(%{assigns: %{ueberauth_failure: _fails}} = conn, _params),
-    do: authentication_failure(conn)
+  defp ensure_proper_domain(%{assigns: %{ueberauth_failure: _fails}} = conn, _params), do: authentication_failure(conn)
 
   defp authentication_failure(conn) do
     conn

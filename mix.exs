@@ -6,9 +6,9 @@ defmodule Sejfguru.Mixfile do
       app: :sejfguru,
       version: "0.0.1",
       elixir: "~> 1.6",
-      elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
-      start_permanent: Mix.env() == :production || Mix.env() == :staging,
+      elixirc_paths: elixirc_paths(Mix.env),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      start_permanent: Mix.env == :production || Mix.env == :staging,
       aliases: aliases(),
       deps: deps()
     ]
@@ -20,13 +20,13 @@ defmodule Sejfguru.Mixfile do
   def application do
     [
       mod: {Sejfguru.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth]
+      extra_applications: [:logger, :runtime_tools, :ueberauth],
     ]
   end
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
   #
@@ -47,7 +47,7 @@ defmodule Sejfguru.Mixfile do
       {:distillery, "~> 1.4", runtime: false},
       {:httpoison, "~> 1.0"},
       {:mock, "~> 0.3.0", only: :test},
-      {:scrivener_ecto, "~> 1.0"}
+      {:scrivener_ecto, "~> 1.0"},
     ]
   end
 
@@ -61,7 +61,7 @@ defmodule Sejfguru.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end
