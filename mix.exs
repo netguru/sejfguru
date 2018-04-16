@@ -47,7 +47,8 @@ defmodule Sejfguru.Mixfile do
       {:distillery, "~> 1.4", runtime: false},
       {:httpoison, "~> 1.0"},
       {:mock, "~> 0.3.0", only: :test},
-      {:scrivener_ecto, "~> 1.0"}
+      {:scrivener_ecto, "~> 1.0"},
+      {:credo, "~> 0.9.0-rc1", only: [:dev, :test], runtime: false}
     ]
   end
 
