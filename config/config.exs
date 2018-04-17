@@ -5,6 +5,9 @@
 # is restricted to this project.
 use Mix.Config
 
+# Since Mix is not available in release, we need to set it on compile time
+config :sejfguru, env: Mix.env()
+
 # General application configuration
 config :sejfguru,
   ecto_repos: [Sejfguru.Repo]

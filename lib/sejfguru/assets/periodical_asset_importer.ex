@@ -11,7 +11,7 @@ defmodule Sejfguru.Assets.PeriodicalAssetImporter do
   end
 
   def handle_info(:work, state) do
-    work(Mix.env)
+    work(Application.get_env(:sejfguru, :env))
     schedule_work(hours: 24)
     {:noreply, state}
   end
