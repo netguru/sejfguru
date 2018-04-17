@@ -14,7 +14,7 @@ defmodule Sejfguru.Application do
       supervisor(SejfguruWeb.Endpoint, []),
       # Start your own worker by calling: Sejfguru.Worker.start_link(arg1, arg2, arg3)
       # worker(Sejfguru.Worker, [arg1, arg2, arg3]),
-      worker(Sejfguru.Assets.PeriodicalAssetImporter, [])
+      # worker(Sejfguru.Assets.PeriodicalAssetImporter, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
