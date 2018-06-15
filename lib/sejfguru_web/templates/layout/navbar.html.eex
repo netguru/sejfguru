@@ -16,6 +16,7 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
+            <li><%= link "My bookings", to: booking_path(@conn, :my_booking) %></li>
             <li><%= link "Logout", to: auth_path(@conn, :logout), method: :delete %></li>
           </ul>
         </li>
