@@ -32,7 +32,39 @@ defmodule Sejfguru.Assets do
   """
   def list_assets(type: type, page: page) do
     Asset
-      |> Ecto.Query.where(type_name: ^type)
+    |> Ecto.Query.where(type_name: ^type)
+    |> Ecto.Query.order_by(:name)
+    |> Repo.paginate(page: page)
+  end
+
+   @doc """
+  Returns the list of assets of given type paginated.
+
+  ## Examples
+
+      iex> list_assets(type: "Mobile", page: 1)
+      [%Asset{}, ...]
+
+  """
+  def list_assets_with_users(type: type, page: page) do
+    Asset
+    |> Ecto.Query.where(type_name: ^type)
+    |> Ecto.Query.order_by(:name)
+    |> Ecto.Query.preload(bookings: :user)
+    |> Repo.paginate(page: page)
+  end
+
+   @doc """
+  Returns the paginated list of assets.
+
+  ## Examples
+
+      iex> list_assets(page: 1)
+      [%Asset{}, ...]
+
+  """
+  def list_assets(page: page) do
+    Asset
       |> Ecto.Query.order_by(:name)
       |> Repo.paginate(page: page)
   end
