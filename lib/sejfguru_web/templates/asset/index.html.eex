@@ -9,6 +9,7 @@
         <th scope="col">Location</th>
         <th scope="col">Last User</th>
         <th scope="col">Last Borrowed</th>
+        <th scope="col">Status</th>
         <th scope="col" colspan="2">Actions</th>
       </tr>
     </thead>
@@ -22,8 +23,17 @@
           <td><%= asset.location_name %></td>
           <td><%= SejfguruWeb.AssetView.last_user(asset) %></td>
           <td><%= SejfguruWeb.AssetView.last_borrowed_at(asset) %></td>
+          <td><%= SejfguruWeb.AssetView.asset_status(asset) %></td>
           <td><%= link "Show history", to: booking_path(@conn, :index, asset.id) %></td>
-          <td><%= link "Borrow", to: booking_path(@conn, :create, asset_id: asset.id), method: :post %></td>
+          <td>
+            <%= if SejfguruWeb.AssetView.can_return(asset, @current_user) do %>
+              <%= link "Return", to: booking_path(@conn, :return, SejfguruWeb.AssetView.last_booking(asset).id), method: :post %>
+            <% else %>
+              <%= if SejfguruWeb.AssetView.can_borrow(asset) do %>
+                <%= link "Borrow", to: booking_path(@conn, :create, asset_id: asset.id), method: :post %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>

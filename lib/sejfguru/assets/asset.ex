@@ -29,4 +29,19 @@ defmodule Sejfguru.Assets.Asset do
                     :name, :product_name, :state_name, :tag, :type_name, :used_by,
                     :values, :vendor_name])
   end
+
+  def is_borrowed(asset) do
+    last_booking = asset.bookings |> Enum.sort_by(fn(x) -> x.id end) |> List.last()
+    last_booking != nil && last_booking.returned_at == nil
+  end
+
+  def is_borrowed_by_user(asset, user) do
+    last_booking = asset.bookings |> Enum.sort_by(fn(x) -> x.id end) |> List.last()
+    last_booking != nil && last_booking.returned_at == nil && last_booking.user.id == user.id
+  end
+
+  def is_not_borrowed(asset) do
+    last_booking = asset.bookings |> Enum.sort_by(fn(x) -> x.id end) |> List.last()
+    last_booking == nil || (last_booking != nil && last_booking.returned_at != nil)
+  end
 end

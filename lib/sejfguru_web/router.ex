@@ -40,5 +40,6 @@ defmodule SejfguruWeb.Router do
     get "/bookings/my_booking", BookingController, :my_booking
     get "/bookings/:asset_id", BookingController, :index
     post "/bookings", BookingController, :create
+    post "/bookings/:id/return", BookingController, :return
   end
 end
