@@ -38,6 +38,23 @@ defmodule Sejfguru.Bookings do
   end
 
   @doc """
+  Returns the list of bookings for given asset.
+
+  ## Examples
+
+      iex> list_bookings_for_asset(asset)
+      [%Booking{}, ...]
+
+  """
+  def list_bookings_for_asset(asset_id) do
+    Booking
+    |> order_by(:inserted_at)
+    |> where(asset_id: ^asset_id)
+    |> Repo.all
+    |> Repo.preload([:user, :asset])
+  end
+
+  @doc """
   Gets a single booking.
 
   Raises `Ecto.NoResultsError` if the Booking does not exist.
