@@ -20,8 +20,8 @@
           <td><%= asset.name %></td>
           <td><%= asset.product_name %></td>
           <td><%= asset.location_name %></td>
-          <td>N/A</td>
-          <td>N/A</td>
+          <td><%= SejfguruWeb.AssetView.last_user(asset) %></td>
+          <td><%= SejfguruWeb.AssetView.last_borrowed_at(asset) %></td>
           <td><%= link "Show history", to: booking_path(@conn, :index, asset.id) %></td>
           <td><%= link "Borrow", to: booking_path(@conn, :create, asset_id: asset.id), method: :post %></td>
         </tr>
