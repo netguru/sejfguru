@@ -12,7 +12,7 @@
           <a href="" class="dropdown-toggle" id="dropdownNavbar"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
           >
-            Kraków
+            <%= @current_location %>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
