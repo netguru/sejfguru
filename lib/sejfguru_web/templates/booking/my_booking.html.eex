@@ -1,0 +1,22 @@
+<div class="container">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Borrowed asset name</th>
+        <th scope="col">Borrowed asset description</th>
+        <th scope="col">Borrowed at</th>
+        <th scope="col">Returned at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for booking <- @my_bookings do %>
+        <tr>
+          <td><%= booking.asset.name %></td>
+          <td><%= booking.asset.description %></td>
+          <td><%= booking.inserted_at %></td>
+          <td><%= booking.returned_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

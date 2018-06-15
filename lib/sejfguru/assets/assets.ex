@@ -38,17 +38,16 @@ defmodule Sejfguru.Assets do
   end
 
    @doc """
-  Returns the list of assets of given type paginated.
+  Returns the list of assets with users and bookings loaded, paginated.
 
   ## Examples
 
-      iex> list_assets(type: "Mobile", page: 1)
+      iex> list_assets(page: 1)
       [%Asset{}, ...]
 
   """
-  def list_assets_with_users(type: type, page: page) do
+  def list_assets_with_users(page: page) do
     Asset
-    |> Ecto.Query.where(type_name: ^type)
     |> Ecto.Query.order_by(:name)
     |> Ecto.Query.preload(bookings: :user)
     |> Repo.paginate(page: page)

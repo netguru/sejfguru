@@ -22,6 +22,22 @@ defmodule Sejfguru.Bookings do
   end
 
   @doc """
+  Returns the list of bookings for given user.
+
+  ## Examples
+
+      iex> list_bookings_for_user(user)
+      [%Booking{}, ...]
+
+  """
+  def list_bookings_for_user(user) do
+    Booking
+    |> where(user_id: ^user.id)
+    |> Repo.all
+    |> Repo.preload(:asset)
+  end
+
+  @doc """
   Gets a single booking.
 
   Raises `Ecto.NoResultsError` if the Booking does not exist.

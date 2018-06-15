@@ -37,6 +37,7 @@ defmodule SejfguruWeb.Router do
 
     get "/", AssetController, :index, as: :root
     resources "/assets", AssetController, only: [:index]
+    get "/bookings/my_booking", BookingController, :my_booking
     get "/bookings/:asset_id", BookingController, :index
     post "/bookings", BookingController, :create
   end
