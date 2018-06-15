@@ -13,6 +13,6 @@ defmodule SejfguruWeb.AssetController do
   defp fetch_page(_params), do: 1
 
   defp fetch_assets(page) do
-    Sejfguru.Assets.list_assets(type: "Mobile", page: page)
+    Sejfguru.Assets.list_assets(page: page)
   end
 end
