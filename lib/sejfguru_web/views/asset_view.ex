@@ -27,7 +27,7 @@ defmodule SejfguruWeb.AssetView do
 
   def asset_status(asset) do
     booking = last_booking(asset)
-    if booking && booking.returned_at == nil, do: "borrowed", else: "available"
+    if booking != nil && booking.returned_at == nil, do: "borrowed", else: "available"
   end
 
   def can_return(asset, user) do
