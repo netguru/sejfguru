@@ -31,9 +31,25 @@
 
   <div class="text-center">
     <ul class="pagination">
-      <li><%= link "< Prev page", to: asset_path(@conn, :index, page: @page - 1) %></li>
+      <%= if @page <= 1 do %>
+        <li class="disabled">
+          <a>< Prev page</a>
+        </li>
+      <% else %>
+        <li>
+          <%= link "< Prev page", to: asset_path(@conn, :index, page: @page - 1) %>
+        </li>
+      <% end %>
       <li><a href="#"><%= @page %></a></li>
-      <li><%= link "Next page >", to: asset_path(@conn, :index, page: @page + 1) %></li>
+      <%= if @page >= @assets.total_pages do %>
+        <li class="disabled">
+          <a>Next page ></a>
+        </li>
+      <% else %>
+        <li>
+          <%= link "Next page >", to: asset_path(@conn, :index, page: @page + 1) %>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>

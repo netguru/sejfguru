@@ -54,6 +54,21 @@ defmodule Sejfguru.Assets do
     |> Repo.paginate(page: page)
   end
 
+   @doc """
+  Returns the paginated list of assets.
+
+  ## Examples
+
+      iex> list_assets(page: 1)
+      [%Asset{}, ...]
+
+  """
+  def list_assets(page: page) do
+    Asset
+      |> Ecto.Query.order_by(:name)
+      |> Repo.paginate(page: page)
+  end
+
   @doc """
   Gets a single asset.
 
