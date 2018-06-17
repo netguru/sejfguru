@@ -9,7 +9,7 @@ defmodule SejfguruWeb.AssetController do
     |> assign(:city_locations, Location.city_lables())
     |> assign(:other_locations, Location.other_labels())
     |> assign(:current_location, fetch_location(params))
-    |> assign(:assets, fetch_assets(fetch_page(params)))
+    |> assign(:assets, fetch_assets(fetch_page(params), fetch_location(params)))
     |> render("index.html")
   end
 
@@ -18,9 +18,9 @@ defmodule SejfguruWeb.AssetController do
 
   # IDEA: Maybe we should geolocate user, and select the nearest city as default option
   defp fetch_location(%{"location" => location}), do: location
-  defp fetch_location(_params), do: List.first(Location.city_lables())
+  defp fetch_location(_params), do: Location.all_locations_label()
 
-  defp fetch_assets(page) do
-    Sejfguru.Assets.list_assets(type: "Mobile", page: page)
+  defp fetch_assets(page, location) do
+    Sejfguru.Assets.list_assets(type: "Laptop", page: page, location: location)
   end
 end

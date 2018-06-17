@@ -7,6 +7,10 @@ defmodule Sejfguru.Assets.Location do
     Map.keys(locations().other)
   end
 
+  def all_locations_label do
+    "Wszystkie miasta"
+  end
+
   def locations do
     %{
       cities: %{
@@ -20,6 +24,7 @@ defmodule Sejfguru.Assets.Location do
       },
       other: %{
         "Pozostałe" => ["Remote"],
+        all_locations_label() => :all_locations,
       }
     }
   end

@@ -7,6 +7,7 @@ defmodule Sejfguru.Assets do
   alias Sejfguru.Repo
 
   alias Sejfguru.Assets.Asset
+  alias Sejfguru.Assets.Location
 
   @doc """
   Returns the list of assets.
@@ -35,6 +36,31 @@ defmodule Sejfguru.Assets do
       |> Ecto.Query.where(type_name: ^type)
       |> Ecto.Query.order_by(:name)
       |> Repo.paginate(page: page)
+  end
+
+   @doc """
+  Returns the list of assets of given type paginated.
+
+  ## Examples
+
+      iex> list_assets(type: "Mobile", page: 1)
+      [%Asset{}, ...]
+
+  """
+  def list_assets(type: type, page: page, location: location) do
+    # asd = chosen_location(:location)
+    # require IEx; IEx.pry
+    IO.inspect(location)
+    Asset
+      |> Ecto.Query.where(type_name: ^type)
+      |> location_condition(chosen_location(location))
+      |> Ecto.Query.order_by(:name)
+      |> Repo.paginate(page: page)
+  end
+
+  defp location_condition(query, :all_locations), do: query
+  defp location_condition(query, locations) do
+    Ecto.Query.where(query, [a], a.location_name in ^locations)
   end
 
   @doc """
@@ -134,5 +160,9 @@ defmodule Sejfguru.Assets do
   """
   def change_asset(%Asset{} = asset) do
     Asset.changeset(asset, %{})
+  end
+
+  defp chosen_location(location) do
+    Location.locations().cities[location] || Location.locations().other[location]
   end
 end
