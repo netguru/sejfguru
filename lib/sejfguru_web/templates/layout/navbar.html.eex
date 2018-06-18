@@ -12,6 +12,23 @@
           <a href="" class="dropdown-toggle" id="dropdownNavbar"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
           >
+            <%= @current_location %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
+            <%= for location <- @city_locations do %>
+              <li><%= link location, to: asset_path(@conn, :index, location: location) %></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
+            <%= for location <- @other_locations do %>
+              <li><%= link location, to: asset_path(@conn, :index, location: location) %></li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" id="dropdownNavbar"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+          >
             Hello, <%= @current_user.first_name %>
             <span class="caret"></span>
           </a>

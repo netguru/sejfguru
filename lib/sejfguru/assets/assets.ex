@@ -7,6 +7,7 @@ defmodule Sejfguru.Assets do
   alias Sejfguru.Repo
 
   alias Sejfguru.Assets.Asset
+  alias Sejfguru.Assets.Location
 
   @doc """
   Returns the list of assets.
@@ -46,9 +47,10 @@ defmodule Sejfguru.Assets do
       [%Asset{}, ...]
 
   """
-  def list_assets_with_users(page: page) do
+  def list_assets_with_users(page: page, location: location) do
     Asset
     |> Ecto.Query.order_by(:name)
+    |> location_condition(chosen_location(location))
     |> Ecto.Query.preload(bookings: :user)
     |> Repo.paginate(page: page)
   end
@@ -165,5 +167,14 @@ defmodule Sejfguru.Assets do
   """
   def change_asset(%Asset{} = asset) do
     Asset.changeset(asset, %{})
+  end
+
+  defp location_condition(query, :all_locations), do: query
+  defp location_condition(query, locations) do
+    Ecto.Query.where(query, [a], a.location_name in ^locations)
+  end
+
+  defp chosen_location(location) do
+    Location.locations().cities[location] || Location.locations().other[location]
   end
 end
