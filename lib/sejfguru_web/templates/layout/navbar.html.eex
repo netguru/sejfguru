@@ -17,11 +17,11 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
             <%= for location <- @city_locations do %>
-              <li><%= link location, to: asset_path(@conn, :index, page: 1, location: location) %></li>
+              <li><%= link location, to: asset_path(@conn, :index, location: location) %></li>
             <% end %>
             <li role="separator" class="divider"></li>
             <%= for location <- @other_locations do %>
-              <li><%= link location, to: asset_path(@conn, :index, page: 1, location: location) %></li>
+              <li><%= link location, to: asset_path(@conn, :index, location: location) %></li>
             <% end %>
           </ul>
         </li>

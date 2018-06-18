@@ -48,9 +48,6 @@ defmodule Sejfguru.Assets do
 
   """
   def list_assets(type: type, page: page, location: location) do
-    # asd = chosen_location(:location)
-    # require IEx; IEx.pry
-    IO.inspect(location)
     Asset
       |> Ecto.Query.where(type_name: ^type)
       |> location_condition(chosen_location(location))
