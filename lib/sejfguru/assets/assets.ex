@@ -42,12 +42,29 @@ defmodule Sejfguru.Assets do
 
   ## Examples
 
-      iex> list_assets(page: 1)
+      iex> list_assets_with_users(page: 1)
       [%Asset{}, ...]
 
   """
   def list_assets_with_users(page: page) do
     Asset
+    |> Ecto.Query.order_by(:name)
+    |> Ecto.Query.preload(bookings: :user)
+    |> Repo.paginate(page: page)
+  end
+
+   @doc """
+  Returns the list of filtered assets with users and bookings loaded, paginated.
+
+  ## Examples
+
+      iex> filter_assets_with_users(query: "MacBook", page: 1)
+      [%Asset{}, ...]
+
+  """
+  def filter_assets_with_users(query: query, page: page) do
+    Asset
+    |> Ecto.Query.where([a], like(a.name, ^"%#{query}%"))
     |> Ecto.Query.order_by(:name)
     |> Ecto.Query.preload(bookings: :user)
     |> Repo.paginate(page: page)
