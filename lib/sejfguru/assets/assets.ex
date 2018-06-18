@@ -33,31 +33,41 @@ defmodule Sejfguru.Assets do
   """
   def list_assets(type: type, page: page) do
     Asset
-      |> Ecto.Query.where(type_name: ^type)
-      |> Ecto.Query.order_by(:name)
-      |> Repo.paginate(page: page)
+    |> Ecto.Query.where(type_name: ^type)
+    |> Ecto.Query.order_by(:name)
+    |> Repo.paginate(page: page)
   end
 
    @doc """
-  Returns the list of assets of given type paginated.
+  Returns the list of assets with users and bookings loaded, paginated.
 
   ## Examples
 
-      iex> list_assets(type: "Mobile", page: 1)
+      iex> list_assets(page: 1)
       [%Asset{}, ...]
 
   """
-  def list_assets(type: type, page: page, location: location) do
+  def list_assets_with_users(page: page, location: location) do
     Asset
-      |> Ecto.Query.where(type_name: ^type)
-      |> location_condition(chosen_location(location))
-      |> Ecto.Query.order_by(:name)
-      |> Repo.paginate(page: page)
+    |> Ecto.Query.order_by(:name)
+    |> location_condition(chosen_location(location))
+    |> Ecto.Query.preload(bookings: :user)
+    |> Repo.paginate(page: page)
   end
 
-  defp location_condition(query, :all_locations), do: query
-  defp location_condition(query, locations) do
-    Ecto.Query.where(query, [a], a.location_name in ^locations)
+   @doc """
+  Returns the paginated list of assets.
+
+  ## Examples
+
+      iex> list_assets(page: 1)
+      [%Asset{}, ...]
+
+  """
+  def list_assets(page: page) do
+    Asset
+      |> Ecto.Query.order_by(:name)
+      |> Repo.paginate(page: page)
   end
 
   @doc """
@@ -157,6 +167,11 @@ defmodule Sejfguru.Assets do
   """
   def change_asset(%Asset{} = asset) do
     Asset.changeset(asset, %{})
+  end
+
+  defp location_condition(query, :all_locations), do: query
+  defp location_condition(query, locations) do
+    Ecto.Query.where(query, [a], a.location_name in ^locations)
   end
 
   defp chosen_location(location) do

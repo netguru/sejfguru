@@ -21,6 +21,6 @@ defmodule SejfguruWeb.AssetController do
   defp fetch_location(_params), do: Location.all_locations_label()
 
   defp fetch_assets(page, location) do
-    Sejfguru.Assets.list_assets(type: "Laptop", page: page, location: location)
+    Sejfguru.Assets.list_assets_with_users(page: page, location: location)
   end
 end
